@@ -21,8 +21,7 @@ namespace InnstantBook.Repositorios
 
         public async Task<List<HotelModel>> BuscarTodosHoteis()
         {
-            var r = await _dbContext.Hoteis.FromSqlRaw("SELECT Hoteis.Id, STRING_AGG(Quartos.Id, ', ') AS IdsQuartos, Hoteis.Nome, Hoteis.Endereco FROM DB_SistemaDeReservasAPI.dbo.Hoteis JOIN DB_SistemaDeReservasAPI.dbo.Quartos ON Hoteis.Id = Quartos.HotelId GROUP BY Hoteis.Id, Hoteis.Nome, Hoteis.Endereco ORDER BY Hoteis.Id;\r\n").ToListAsync();
-            return (r);
+            return await _dbContext.Hoteis.FromSqlRaw("SELECT Hoteis.Id, STRING_AGG(Quartos.Id, ', ') AS IdsQuartos, Hoteis.Nome, Hoteis.Endereco FROM DB_SistemaDeReservasAPI.dbo.Hoteis JOIN DB_SistemaDeReservasAPI.dbo.Quartos ON Hoteis.Id = Quartos.HotelId GROUP BY Hoteis.Id, Hoteis.Nome, Hoteis.Endereco ORDER BY Hoteis.Id;\r\n").ToListAsync();
         }
 
         public async Task<HotelModel> Adicionar(HotelModel hotel)

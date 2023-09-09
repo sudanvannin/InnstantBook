@@ -11,6 +11,7 @@ namespace InnstantBook.Data.Map
             builder.HasKey(x => x.Id);
             builder.Property(x => x.DataInicio).IsRequired();
             builder.Property(x => x.DataFim).IsRequired();
+            builder.Property(x => x.Status).IsRequired();
             builder.Property(x => x.QuartoId).IsRequired();
             builder.Property(x => x.ClienteId).IsRequired();
 

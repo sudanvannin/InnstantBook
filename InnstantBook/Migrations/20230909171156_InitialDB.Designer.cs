@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace InnstantBook.Migrations
 {
     [DbContext(typeof(SistemaDeReservasDBContext))]
-    [Migration("20230909151447_InitialDB")]
+    [Migration("20230909171156_InitialDB")]
     partial class InitialDB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -84,6 +84,10 @@ namespace InnstantBook.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
+                    b.Property<string>("IdsQuartos")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Nome")
                         .IsRequired()
                         .HasMaxLength(255)
@@ -137,6 +141,9 @@ namespace InnstantBook.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<int>("QuartoId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Status")
                         .HasColumnType("int");
 
                     b.HasKey("Id");

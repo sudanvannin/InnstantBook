@@ -43,6 +43,7 @@ namespace InnstantBook.Repositorios
 
             reservaPorId.DataInicio = reserva.DataInicio;
             reservaPorId.DataFim = reserva.DataFim;
+            reservaPorId.Status = reserva.Status;
             reservaPorId.QuartoId = reserva.QuartoId;
             reservaPorId.ClienteId = reserva.ClienteId;
 

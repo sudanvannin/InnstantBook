@@ -14,31 +14,32 @@ namespace InnstantBook.Repositorios
             _dbContext = sistemaDeReservasDBContext;
         }
 
-        public async Task<ClienteModel> BuscarPorId(int id)
+        public async Task<ClienteModel> BuscarPorId(string id)
         {
-            return await _dbContext.Clientes.FirstOrDefaultAsync(x => x.Id == id);
+            return await _dbContext.Clientes.FirstOrDefaultAsync(x => x.CPF == id);
         }
 
         public async Task<List<ClienteModel>> BuscarTodosClientes()
         {
-            return await _dbContext.Clientes.ToListAsync();
+            return await _dbContext.Clientes.FromSqlRaw("SELECT Clientes.CPF, STRING_AGG(Reservas.Id, ', ') AS IdsReservas, Clientes.Nome, Clientes.Email FROM DB_SistemaDeReservasAPI.dbo.Clientes LEFT JOIN DB_SistemaDeReservasAPI.dbo.Reservas ON Clientes.CPF = Reservas.ClienteCPF GROUP BY Clientes.CPF, Clientes.Nome, Clientes.Email ORDER BY Clientes.CPF;").ToListAsync();
         }
 
         public async Task<ClienteModel> Adicionar(ClienteModel cliente)
         {
+
             await _dbContext.Clientes.AddAsync(cliente);
             await _dbContext.SaveChangesAsync();
 
             return cliente;
         }
 
-        public async Task<ClienteModel> Atualizar(ClienteModel cliente, int id)
+        public async Task<ClienteModel> Atualizar(ClienteModel cliente, string id)
         {
             ClienteModel clientePorId = await BuscarPorId(id);
 
             if (clientePorId == null)
             {
-                throw new Exception($"Avaliacao para o ID: {id} não foi encontrada no banco de dados");
+                throw new Exception($"Cliente para o ID: {id} não foi encontrada no banco de dados");
             }
 
             clientePorId.Nome = cliente.Nome;
@@ -50,7 +51,7 @@ namespace InnstantBook.Repositorios
             return clientePorId;
         }
 
-        public async Task<bool> Apagar(int id)
+        public async Task<bool> Apagar(string id)
         {
             ClienteModel clientePorId = await BuscarPorId(id);
 

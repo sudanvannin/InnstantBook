@@ -8,7 +8,7 @@ namespace InnstantBook.Data.Map
     {
         public void Configure(EntityTypeBuilder<ClienteModel> builder)
         {
-        builder.HasKey(x => x.Id);
+        builder.HasKey(x => x.CPF);
         builder.Property(x => x.Nome).IsRequired().HasMaxLength(255);
         builder.Property(x => x.Email).IsRequired().HasMaxLength(100);
 

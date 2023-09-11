@@ -12,7 +12,7 @@ namespace InnstantBook.Data.Map
             builder.Property(x => x.Numero).IsRequired();
             builder.Property(x => x.Preco).IsRequired();
             builder.Property(x => x.Status).IsRequired();
-            builder.Property(x => x.HotelId).IsRequired();
+            builder.Property(x => x.HotelCNPJ).IsRequired();
 
         }
     }

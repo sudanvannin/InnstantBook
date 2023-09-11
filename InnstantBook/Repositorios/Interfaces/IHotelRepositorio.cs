@@ -5,9 +5,9 @@ namespace InnstantBook.Repositorios.Interfaces
     public interface IHotelRepositorio
     {
         Task<List<HotelModel>> BuscarTodosHoteis();
-        Task<HotelModel> BuscarPorId(int id);
+        Task<HotelModel> BuscarPorId(string id);
         Task<HotelModel> Adicionar(HotelModel hotel);
-        Task<HotelModel> Atualizar(HotelModel hotel, int id);
-        Task<bool> Apagar(int id);
+        Task<HotelModel> Atualizar(HotelModel hotel, string id);
+        Task<bool> Apagar(string id);
     }
 }

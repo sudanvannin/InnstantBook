@@ -35,8 +35,9 @@ namespace InnstantBook.Migrations
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
-                    b.Property<int>("HotelId")
-                        .HasColumnType("int");
+                    b.Property<string>("HotelCNPJ")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Nota")
                         .HasColumnType("int");
@@ -48,42 +49,15 @@ namespace InnstantBook.Migrations
 
             modelBuilder.Entity("InnstantBook.Models.ClienteModel", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    b.Property<string>("CPF")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<string>("Nome")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Clientes");
-                });
-
-            modelBuilder.Entity("InnstantBook.Models.HotelModel", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("Endereco")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
-
-                    b.Property<string>("IdsQuartos")
-                        .IsRequired()
+                    b.Property<string>("IdsReservas")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Nome")
@@ -91,7 +65,33 @@ namespace InnstantBook.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.HasKey("Id");
+                    b.HasKey("CPF");
+
+                    b.ToTable("Clientes");
+                });
+
+            modelBuilder.Entity("InnstantBook.Models.HotelModel", b =>
+                {
+                    b.Property<string>("CNPJ")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Endereco")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<string>("IdsAvaliacoes")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("IdsQuartos")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.HasKey("CNPJ");
 
                     b.ToTable("Hoteis");
                 });
@@ -104,8 +104,12 @@ namespace InnstantBook.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("HotelId")
-                        .HasColumnType("int");
+                    b.Property<string>("HotelCNPJ")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("IdsReservas")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Numero")
                         .HasColumnType("int");
@@ -129,8 +133,9 @@ namespace InnstantBook.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("ClienteId")
-                        .HasColumnType("int");
+                    b.Property<string>("ClienteCPF")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("DataFim")
                         .HasColumnType("datetime2");

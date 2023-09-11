@@ -32,6 +32,10 @@ namespace InnstantBook.Controllers
         [HttpPost]
         public async Task<ActionResult<AvaliacaoModel>> Cadastrar([FromBody] AvaliacaoModel avaliacaoModel)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
             AvaliacaoModel avaliacao = await _avaliacaoRepositorio.Adicionar(avaliacaoModel);
             return Ok(avaliacao);
         }
@@ -39,6 +43,10 @@ namespace InnstantBook.Controllers
         [HttpPut("{id}")]
         public async Task<ActionResult<AvaliacaoModel>> Atualizar([FromBody] AvaliacaoModel avaliacaoModel, int id)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
             avaliacaoModel.Id = id;
             AvaliacaoModel avaliacao = await _avaliacaoRepositorio.Atualizar(avaliacaoModel, id);
             return Ok(avaliacao);

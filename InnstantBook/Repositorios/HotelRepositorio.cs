@@ -14,14 +14,14 @@ namespace InnstantBook.Repositorios
             _dbContext = sistemaDeReservasDBContext;
         }
 
-        public async Task<HotelModel> BuscarPorId(int id)
+        public async Task<HotelModel> BuscarPorId(string id)
         {
-            return await _dbContext.Hoteis.FirstOrDefaultAsync(x => x.Id == id);
+            return await _dbContext.Hoteis.FirstOrDefaultAsync(x => x.CNPJ == id);
         }
 
         public async Task<List<HotelModel>> BuscarTodosHoteis()
         {
-            return await _dbContext.Hoteis.FromSqlRaw("SELECT Hoteis.Id, STRING_AGG(Quartos.Id, ', ') AS IdsQuartos, Hoteis.Nome, Hoteis.Endereco FROM DB_SistemaDeReservasAPI.dbo.Hoteis JOIN DB_SistemaDeReservasAPI.dbo.Quartos ON Hoteis.Id = Quartos.HotelId GROUP BY Hoteis.Id, Hoteis.Nome, Hoteis.Endereco ORDER BY Hoteis.Id;\r\n").ToListAsync();
+            return await _dbContext.Hoteis.FromSqlRaw(@"WITH QuartosAgregados AS (SELECT HotelCNPJ, STRING_AGG(Quartos.Id, ', ') AS IdsQuartos FROM DB_SistemaDeReservasAPI.dbo.Quartos GROUP BY HotelCNPJ), AvaliacoesAgregadas AS (SELECT HotelCNPJ, STRING_AGG(Avaliacoes.Id, ', ') AS IdsAvaliacoes FROM DB_SistemaDeReservasAPI.dbo.Avaliacoes GROUP BY HotelCNPJ) SELECT Hoteis.CNPJ, NULLIF(ISNULL(QuartosAgregados.IdsQuartos, ''), '') AS IdsQuartos, NULLIF(ISNULL(AvaliacoesAgregadas.IdsAvaliacoes, ''), '') AS IdsAvaliacoes, Hoteis.Nome, Hoteis.Endereco FROM DB_SistemaDeReservasAPI.dbo.Hoteis LEFT JOIN QuartosAgregados ON Hoteis.CNPJ = QuartosAgregados.HotelCNPJ LEFT JOIN AvaliacoesAgregadas ON Hoteis.CNPJ = AvaliacoesAgregadas.HotelCNPJ ORDER BY Hoteis.CNPJ;").ToListAsync();
         }
 
         public async Task<HotelModel> Adicionar(HotelModel hotel)
@@ -32,7 +32,7 @@ namespace InnstantBook.Repositorios
             return hotel;
         }
 
-        public async Task<HotelModel> Atualizar(HotelModel hotel, int id)
+        public async Task<HotelModel> Atualizar(HotelModel hotel, string id)
         {
             HotelModel hotelPorId = await BuscarPorId(id);
 
@@ -50,7 +50,7 @@ namespace InnstantBook.Repositorios
             return hotelPorId;
         }
 
-        public async Task<bool> Apagar(int id)
+        public async Task<bool> Apagar(string id)
         {
             HotelModel hotelPorId = await BuscarPorId(id);
 

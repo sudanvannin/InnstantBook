@@ -11,7 +11,7 @@ namespace InnstantBook.Data.Map
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Nota).IsRequired();
             builder.Property(x => x.Comentario).HasMaxLength(500);
-            builder.Property(x => x.HotelId).IsRequired();
+            builder.Property(x => x.HotelCNPJ).IsRequired();
         }
     }
 }

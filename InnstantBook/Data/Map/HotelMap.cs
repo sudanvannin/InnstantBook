@@ -8,7 +8,7 @@ namespace InnstantBook.Data.Map
     {
         public void Configure(EntityTypeBuilder<HotelModel> builder)
         {
-            builder.HasKey(x => x.Id);
+            builder.HasKey(x => x.CNPJ);
             builder.Property(x => x.Nome).IsRequired().HasMaxLength(255);
             builder.Property(x => x.Endereco).IsRequired().HasMaxLength(255);
         }

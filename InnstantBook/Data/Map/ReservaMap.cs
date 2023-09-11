@@ -13,7 +13,7 @@ namespace InnstantBook.Data.Map
             builder.Property(x => x.DataFim).IsRequired();
             builder.Property(x => x.Status).IsRequired();
             builder.Property(x => x.QuartoId).IsRequired();
-            builder.Property(x => x.ClienteId).IsRequired();
+            builder.Property(x => x.ClienteCPF).IsRequired();
 
         }
     }

@@ -23,8 +23,12 @@ namespace InnstantBook.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<HotelModel>> BuscarPorId(int id)
+        public async Task<ActionResult<HotelModel>> BuscarPorId(string id)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
             HotelModel hotel = await _hotelRepositorio.BuscarPorId(id);
             return Ok(hotel);
         }
@@ -32,21 +36,33 @@ namespace InnstantBook.Controllers
         [HttpPost]
         public async Task<ActionResult<HotelModel>> Cadastrar([FromBody] HotelModel hotelModel)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
             HotelModel hotel = await _hotelRepositorio.Adicionar(hotelModel);
             return Ok(hotel);
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult<HotelModel>> Atualizar([FromBody] HotelModel hotelModel, int id)
+        public async Task<ActionResult<HotelModel>> Atualizar([FromBody] HotelModel hotelModel, string id)
         {
-            hotelModel.Id = id;
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            hotelModel.CNPJ = id;
             HotelModel hotel = await _hotelRepositorio.Atualizar(hotelModel, id);
             return Ok(hotel);
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult<HotelModel>> Apagar(int id)
+        public async Task<ActionResult<HotelModel>> Apagar(string id)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
             bool apagado = await _hotelRepositorio.Apagar(id);
             return Ok(apagado);
         }

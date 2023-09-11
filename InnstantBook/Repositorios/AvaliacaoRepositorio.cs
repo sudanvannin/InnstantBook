@@ -38,12 +38,12 @@ namespace InnstantBook.Repositorios
 
             if (avaliacaoPorId == null)
             {
-                throw new Exception($"Avaliacao para o ID: {id} não foi encontrada no banco de dados");
+                throw new Exception($"Avaliação para o ID: {id} não foi encontrada no banco de dados");
             }
 
             avaliacaoPorId.Nota = avaliacao.Nota;
             avaliacaoPorId.Comentario = avaliacao.Comentario;
-            avaliacaoPorId.HotelId = avaliacao.HotelId;
+            avaliacaoPorId.HotelCNPJ = avaliacao.HotelCNPJ;
 
             _dbContext.Avaliacoes.Update(avaliacaoPorId);
             await _dbContext.SaveChangesAsync();
@@ -57,7 +57,7 @@ namespace InnstantBook.Repositorios
 
             if (avaliacaoPorId == null)
             {
-                throw new Exception($"Tarefa para o ID: {id} não foi encontrada no banco de dados");
+                throw new Exception($"Avaliação para o ID: {id} não foi encontrada no banco de dados");
             }
 
             _dbContext.Avaliacoes.Remove(avaliacaoPorId);

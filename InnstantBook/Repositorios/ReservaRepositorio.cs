@@ -38,14 +38,14 @@ namespace InnstantBook.Repositorios
 
             if (reservaPorId == null)
             {
-                throw new Exception($"Avaliacao para o ID: {id} não foi encontrada no banco de dados");
+                throw new Exception($"Reserva para o ID: {id} não foi encontrada no banco de dados");
             }
 
             reservaPorId.DataInicio = reserva.DataInicio;
             reservaPorId.DataFim = reserva.DataFim;
             reservaPorId.Status = reserva.Status;
             reservaPorId.QuartoId = reserva.QuartoId;
-            reservaPorId.ClienteId = reserva.ClienteId;
+            reservaPorId.ClienteCPF = reserva.ClienteCPF;
 
             _dbContext.Reservas.Update(reservaPorId);
             await _dbContext.SaveChangesAsync();
@@ -59,7 +59,7 @@ namespace InnstantBook.Repositorios
 
             if (reservaPorId == null)
             {
-                throw new Exception($"Cliente para o ID: {id} não foi encontradao no banco de dados");
+                throw new Exception($"Reserva para o ID: {id} não foi encontradao no banco de dados");
             }
 
             _dbContext.Reservas.Remove(reservaPorId);

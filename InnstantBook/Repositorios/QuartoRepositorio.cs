@@ -21,7 +21,7 @@ namespace InnstantBook.Repositorios
 
         public async Task<List<QuartoModel>> BuscarTodosQuartos()
         {
-            return await _dbContext.Quartos.ToListAsync();
+            return await _dbContext.Quartos.FromSqlRaw("SELECT Quartos.Id, NULLIF(STRING_AGG(Reservas.Id, ', '), '') AS IdsReservas, Quartos.Numero, Quartos.Preco, Quartos.Status, Quartos.HotelCNPJ FROM DB_SistemaDeReservasAPI.dbo.Quartos LEFT JOIN DB_SistemaDeReservasAPI.dbo.Reservas ON Quartos.Id = Reservas.QuartoId GROUP BY Quartos.Id, Quartos.Numero, Quartos.Preco, Quartos.Status, Quartos.HotelCNPJ ORDER BY Quartos.Id;").ToListAsync();
         }
 
         public async Task<QuartoModel> Adicionar(QuartoModel quarto)
@@ -44,7 +44,7 @@ namespace InnstantBook.Repositorios
             quartoPorId.Numero = quarto.Numero;
             quartoPorId.Preco = quarto.Preco;
             quartoPorId.Status = quarto.Status;
-            quartoPorId.HotelId = quarto.HotelId;
+            quartoPorId.HotelCNPJ = quarto.HotelCNPJ;
 
             _dbContext.Quartos.Update(quartoPorId);
             await _dbContext.SaveChangesAsync();

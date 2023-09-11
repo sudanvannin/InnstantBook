@@ -17,7 +17,7 @@ namespace InnstantBook.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Nota = table.Column<int>(type: "int", nullable: false),
                     Comentario = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
-                    HotelId = table.Column<int>(type: "int", nullable: false)
+                    HotelCNPJ = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -28,29 +28,29 @@ namespace InnstantBook.Migrations
                 name: "Clientes",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CPF = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Nome = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false)
+                    Email = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    IdsReservas = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Clientes", x => x.Id);
+                    table.PrimaryKey("PK_Clientes", x => x.CPF);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Hoteis",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CNPJ = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Nome = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     Endereco = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    IdsQuartos = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    IdsQuartos = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IdsAvaliacoes = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Hoteis", x => x.Id);
+                    table.PrimaryKey("PK_Hoteis", x => x.CNPJ);
                 });
 
             migrationBuilder.CreateTable(
@@ -62,7 +62,8 @@ namespace InnstantBook.Migrations
                     Numero = table.Column<int>(type: "int", nullable: false),
                     Preco = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false),
-                    HotelId = table.Column<int>(type: "int", nullable: false)
+                    HotelCNPJ = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IdsReservas = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -79,7 +80,7 @@ namespace InnstantBook.Migrations
                     DataFim = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false),
                     QuartoId = table.Column<int>(type: "int", nullable: false),
-                    ClienteId = table.Column<int>(type: "int", nullable: false)
+                    ClienteCPF = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {

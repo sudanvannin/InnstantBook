@@ -23,8 +23,12 @@ namespace InnstantBook.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<ClienteModel>> BuscarPorId(int id)
+        public async Task<ActionResult<ClienteModel>> BuscarPorId(string id)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
             ClienteModel cliente = await _clienteRepositorio.BuscarPorId(id);
             return Ok(cliente);
         }
@@ -32,21 +36,33 @@ namespace InnstantBook.Controllers
         [HttpPost]
         public async Task<ActionResult<ClienteModel>> Cadastrar([FromBody] ClienteModel clienteModel)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
             ClienteModel cliente = await _clienteRepositorio.Adicionar(clienteModel);
             return Ok(cliente);
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult<ClienteModel>> Atualizar([FromBody] ClienteModel clienteModel, int id)
+        public async Task<ActionResult<ClienteModel>> Atualizar([FromBody] ClienteModel clienteModel, string id)
         {
-            clienteModel.Id = id;
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            clienteModel.CPF = id;
             ClienteModel cliente = await _clienteRepositorio.Atualizar(clienteModel, id);
             return Ok(cliente);
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult<ClienteModel>> Apagar(int id)
+        public async Task<ActionResult<ClienteModel>> Apagar(string id)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
             bool apagado = await _clienteRepositorio.Apagar(id);
             return Ok(apagado);
         }

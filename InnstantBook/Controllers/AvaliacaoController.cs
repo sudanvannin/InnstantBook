@@ -55,8 +55,8 @@ namespace InnstantBook.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<AvaliacaoModel>> Apagar(int id)
         {
-            bool apagado = await _avaliacaoRepositorio.Apagar(id);
-            return Ok(apagado);
+            await _avaliacaoRepositorio.Apagar(id);
+            return NoContent();
         }
     }
 }

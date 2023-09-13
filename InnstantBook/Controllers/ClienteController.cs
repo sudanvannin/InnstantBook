@@ -63,8 +63,8 @@ namespace InnstantBook.Controllers
             {
                 return BadRequest(ModelState);
             }
-            bool apagado = await _clienteRepositorio.Apagar(id);
-            return Ok(apagado);
+            await _clienteRepositorio.Apagar(id);
+            return NoContent();
         }
     }
 }

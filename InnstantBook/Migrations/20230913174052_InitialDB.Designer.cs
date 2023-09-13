@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace InnstantBook.Migrations
 {
     [DbContext(typeof(SistemaDeReservasDBContext))]
-    [Migration("20230911155123_InitialDB")]
+    [Migration("20230913174052_InitialDB")]
     partial class InitialDB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -72,15 +72,47 @@ namespace InnstantBook.Migrations
                     b.ToTable("Clientes");
                 });
 
+            modelBuilder.Entity("InnstantBook.Models.EnderecoModel", b =>
+                {
+                    b.Property<string>("Cep")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Bairro")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Cidade")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Estado")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("IdHotel")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Numero")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Rua")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Cep");
+
+                    b.ToTable("Enderecos");
+                });
+
             modelBuilder.Entity("InnstantBook.Models.HotelModel", b =>
                 {
                     b.Property<string>("CNPJ")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Endereco")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("IdsAvaliacoes")
                         .HasColumnType("nvarchar(max)");

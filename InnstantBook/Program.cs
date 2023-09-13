@@ -25,6 +25,8 @@ namespace InnstantBook
             builder.Services.AddScoped<IHotelRepositorio, HotelRepositorio>();
             builder.Services.AddScoped<IQuartoRepositorio, QuartoRepositorio>();
             builder.Services.AddScoped<IReservaRepositorio, ReservaRepositorio>();
+            builder.Services.AddScoped<IEnderecoRepositorio, EnderecoRepositorio>();
+            builder.Services.AddScoped<ICorreiosRepositorio, CorreiosRepositorio>();
 
             var app = builder.Build();
 

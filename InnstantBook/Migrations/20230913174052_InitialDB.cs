@@ -39,12 +39,29 @@ namespace InnstantBook.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Enderecos",
+                columns: table => new
+                {
+                    Cep = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Rua = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Numero = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Bairro = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Cidade = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Estado = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IdHotel = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Enderecos", x => x.Cep);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Hoteis",
                 columns: table => new
                 {
                     CNPJ = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Nome = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    Endereco = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    Endereco = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IdsQuartos = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IdsAvaliacoes = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
@@ -95,6 +112,9 @@ namespace InnstantBook.Migrations
 
             migrationBuilder.DropTable(
                 name: "Clientes");
+
+            migrationBuilder.DropTable(
+                name: "Enderecos");
 
             migrationBuilder.DropTable(
                 name: "Hoteis");

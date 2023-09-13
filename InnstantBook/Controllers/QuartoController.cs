@@ -55,8 +55,8 @@ namespace InnstantBook.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<QuartoModel>> Apagar(int id)
         {
-            bool apagado = await _quartoRepositorio.Apagar(id);
-            return Ok(apagado);
+            await _quartoRepositorio.Apagar(id);
+            return NoContent();
         }
     }
 }

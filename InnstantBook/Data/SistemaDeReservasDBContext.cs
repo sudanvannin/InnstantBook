@@ -13,6 +13,7 @@ namespace InnstantBook.Data
         public DbSet<HotelModel> Hoteis { get; set; }
         public DbSet<QuartoModel> Quartos { get; set; }
         public DbSet<ReservaModel> Reservas { get; set; }
+        public DbSet<EnderecoModel> Enderecos { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -21,6 +22,7 @@ namespace InnstantBook.Data
             modelBuilder.ApplyConfiguration(new HotelMap());
             modelBuilder.ApplyConfiguration(new QuartoMap());
             modelBuilder.ApplyConfiguration(new ReservaMap());
+            modelBuilder.ApplyConfiguration(new EnderecoMap());
             base.OnModelCreating(modelBuilder);
         }
     }

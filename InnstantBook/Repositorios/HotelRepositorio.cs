@@ -2,6 +2,7 @@
 using InnstantBook.Data;
 using InnstantBook.Models;
 using InnstantBook.Repositorios.Interfaces;
+using Correios.NET.Models;
 
 namespace InnstantBook.Repositorios
 {
@@ -21,7 +22,7 @@ namespace InnstantBook.Repositorios
 
         public async Task<List<HotelModel>> BuscarTodosHoteis()
         {
-            return await _dbContext.Hoteis.FromSqlRaw(@"WITH QuartosAgregados AS (SELECT HotelCNPJ, STRING_AGG(Quartos.Id, ', ') AS IdsQuartos FROM DB_SistemaDeReservasAPI.dbo.Quartos GROUP BY HotelCNPJ), AvaliacoesAgregadas AS (SELECT HotelCNPJ, STRING_AGG(Avaliacoes.Id, ', ') AS IdsAvaliacoes FROM DB_SistemaDeReservasAPI.dbo.Avaliacoes GROUP BY HotelCNPJ) SELECT Hoteis.CNPJ, NULLIF(ISNULL(QuartosAgregados.IdsQuartos, ''), '') AS IdsQuartos, NULLIF(ISNULL(AvaliacoesAgregadas.IdsAvaliacoes, ''), '') AS IdsAvaliacoes, Hoteis.Nome, Hoteis.Endereco FROM DB_SistemaDeReservasAPI.dbo.Hoteis LEFT JOIN QuartosAgregados ON Hoteis.CNPJ = QuartosAgregados.HotelCNPJ LEFT JOIN AvaliacoesAgregadas ON Hoteis.CNPJ = AvaliacoesAgregadas.HotelCNPJ ORDER BY Hoteis.CNPJ;").ToListAsync();
+            return await _dbContext.Hoteis.FromSqlRaw(@"WITH QuartosAgregados AS (SELECT HotelCNPJ, STRING_AGG(Quartos.Id, ', ') AS IdsQuartos FROM DB_SistemaDeReservasAPI.dbo.Quartos GROUP BY HotelCNPJ), AvaliacoesAgregadas AS (SELECT HotelCNPJ, STRING_AGG(Avaliacoes.Id, ', ') AS IdsAvaliacoes FROM DB_SistemaDeReservasAPI.dbo.Avaliacoes GROUP BY HotelCNPJ) SELECT h.CNPJ, ISNULL(qa.IdsQuartos, '') AS IdsQuartos, ISNULL(aa.IdsAvaliacoes, '') AS IdsAvaliacoes, h.Nome, CONCAT(e.Rua, ', ', e.Numero, ', ', e.Bairro, ', ', e.Cidade, ', ', e.Estado, ', ', e.Cep) AS Endereco FROM DB_SistemaDeReservasAPI.dbo.Hoteis h LEFT JOIN QuartosAgregados qa ON h.CNPJ = qa.HotelCNPJ LEFT JOIN AvaliacoesAgregadas aa ON h.CNPJ = aa.HotelCNPJ LEFT JOIN DB_SistemaDeReservasAPI.dbo.Enderecos e ON h.CNPJ = e.IdHotel ORDER BY h.CNPJ;").ToListAsync();
         }
 
         public async Task<HotelModel> Adicionar(HotelModel hotel)
@@ -42,7 +43,6 @@ namespace InnstantBook.Repositorios
             }
 
             hotelPorId.Nome = hotel.Nome;
-            hotelPorId.Endereco = hotel.Endereco;
 
             _dbContext.Hoteis.Update(hotelPorId);
             await _dbContext.SaveChangesAsync();
